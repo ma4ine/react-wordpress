@@ -15,6 +15,9 @@ export class Navbar extends React.Component {
 			      <li className="nav-item active">
 			        <Link className="nav-link" to="/">Home</Link>
 			      </li>
+			      <li className="nav-item active">
+			        <Link className="nav-link" to="/login">Login</Link>
+			      </li>
 			    </ul>
 			  </div>
 			</nav>
