@@ -1,5 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
+import axios from 'axios';
+import { Redirect } from '@reach/router';
 
 export class Login extends React.Component {
 
@@ -19,6 +21,40 @@ export class Login extends React.Component {
 
   onFormSubmit = (event) => {
     event.preventDefault();
+
+    const siteUrl = 'http://localhost:3000';
+
+    const loginData = {
+      username: this.state.username,
+      password: this.state.password
+    };
+
+    this.setState( {loading: true}, () => {
+      axios.post( `${siteUrl}/wp-json/jwt-auth/v1/token`, loginData )
+        .then( res => {
+          console.warn( res.data );
+          if ( res.data.token === undefined ) {
+            this.setState( { error: res.data.message, loading: false } );
+            return;
+          }
+
+          localStorage.setItem( 'token', res.data.token );
+          localStorage.setItem( 'userName', res.data.user_nicename );
+          localStorage.setItem( 'userEmail', res.data.user_email );
+
+          this.setState( { 
+            loading: false,
+            token: res.data.token,
+            userNiceName: res.data.user_nicename,
+            userEmail: res.data.user_email,
+            loggedIn: true
+          } );
+        })
+        .catch( err => {
+          console.log(err);
+          // this.setState( { error: err.responce.data, loading: false } )
+        } )
+    } )
   };
 
   handleOnChange = (event) => {
@@ -27,38 +63,48 @@ export class Login extends React.Component {
 
   render() {
 
-    const { username } = this.state;
+    const { username, password, loggedIn, userNiceName } = this.state;
 
-    return (
-      <div>
-        <Navbar />
-        <form onSubmit={ this.onFormSubmit } style={{ marginTop: '20px', marginLeft: '20px' }}>
-          <label htmlFor="#" className="form-group">
-            Username:
-            <input 
-              type="text" 
-              className="form-control" 
-              name="username" 
-              value={ username } 
-              onChange={ this.handleOnChange }
-            />
-          </label>
-          <br/>
-          <label htmlFor="#" className="form-group">
-            Passsword:
-            <input 
-              type="password" 
-              className="form-control" 
-              name="password" 
-              value={ username } 
-              onChange={ this.handleOnChange }
-            />
-          </label>
-          <br/>
-          <button className="btn btn-primary mb3" type="submit">Login</button>
-        </form>
-      </div>
-    )
+    const user = userNiceName ? userNiceName : localStorage.getItem( 'userName' );
+
+    if ( loggedIn || localStorage.getItem( 'token' ) ) {
+
+      return <Redirect to={`/dashboard/${user}`} noThrow />
+
+    } else {
+
+      return (
+        <div>
+          <Navbar />
+          <form onSubmit={ this.onFormSubmit } style={{ marginTop: '20px', marginLeft: '20px' }}>
+            <label htmlFor="#" className="form-group">
+              Username:
+              <input 
+                type="text" 
+                className="form-control" 
+                name="username" 
+                value={ username } 
+                onChange={ this.handleOnChange }
+              />
+            </label>
+            <br/>
+            <label htmlFor="#" className="form-group">
+              Passsword:
+              <input 
+                type="password" 
+                className="form-control" 
+                name="password" 
+                value={ password } 
+                onChange={ this.handleOnChange }
+              />
+            </label>
+            <br/>
+            <button className="btn btn-primary mb3" type="submit">Login</button>
+          </form>
+        </div>
+      );
+
+    }
   }
 }
 
