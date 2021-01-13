@@ -26,7 +26,9 @@ export class Home extends React.Component {
 				.then( res => {
 					this.setState( { loading: false, posts: res.data });
 				})
-				.catch( error => this.setState({ loading: false, error: error.responce.data.message }) );
+				.catch( error => {
+					this.setState({ loading: false, error: error.responce.data.message }) 
+				} );
 		});
 	}
 
@@ -58,7 +60,7 @@ export class Home extends React.Component {
 								{/* Footer */}
 								<div className="card-footer">
 									<Moment fromNow>{post.date}</Moment>
-									<Link to={`/post/${post.id}`} className="btn btn-seconsary float-right">Read More...</Link>
+									<Link to={`/post/${post.id}`} className="btn btn-secondary float-right">Read More...</Link>
 								</div>
 							</div>
 						) ) }
