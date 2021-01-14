@@ -3,5 +3,5 @@ export const isLoggedIn = () => {
 };
 
 export const getUserName = () => {
-  localStorage.getItem( 'userName' );
+  return localStorage.getItem( 'userName' );
 };

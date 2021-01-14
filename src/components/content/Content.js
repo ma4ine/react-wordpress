@@ -3,7 +3,7 @@ import Navbar from "../Navbar";
 
 const Content = ( props ) => {
   return(
-    <div id="content" className={ props.active ? 'active' : '' }>
+    <div id="content" className={ props.active ? 'content active' : 'content' }>
       {/* Top Navbar */}
       <Navbar 
         handleSidebarToggleClick={ props.handleSidebarToggleClick } 

@@ -1,10 +1,10 @@
 import React from 'react';
 import SidebarMenu from "./../dashboard/sidebar/SidebarMenu";
-import Content from "../components/content/Content";
+import Content from "../content/Content";
 
 export class DashboardLayout extends React.Component {
 
-  constructor() {
+  constructor( props ) {
     super( props );
 
     this.state = {
@@ -19,15 +19,17 @@ export class DashboardLayout extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <SidebarMenu
-          active={ this.state.active }
-        />
-        <Content
-          handleSidebarToggleClick={ this.handleSidebarToggleClick } 
-          active={ this.state.active }
-        >
-          { this.props.children }
-        </Content>
+        <div className="wrapper">
+          <SidebarMenu
+            active={ this.state.active }
+          />
+          <Content
+            handleSidebarToggleClick={ this.handleSidebarToggleClick } 
+            active={ this.state.active }
+          >
+            { this.props.children }
+          </Content>
+        </div>
       </React.Fragment>
     )
   }

@@ -4,7 +4,8 @@ import { Router } from "@reach/router";
 import './App.css';
 import SinglePost from './components/SinglePost';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
+import CreatePost from './components/dashboard/posts/CreatePost';
 
 export class App extends React.Component {
   render() {
@@ -12,9 +13,10 @@ export class App extends React.Component {
       <div>
         <Router>
           <Home path="/" />
-          <SinglePost path="/post/:id" />
           <Login path="/login" />
           <Dashboard path="/dashboard/:userName" />
+          <CreatePost path="/dashboard/create-post" />
+          <SinglePost path="/post/:id" />
         </Router>
       </div>
     )

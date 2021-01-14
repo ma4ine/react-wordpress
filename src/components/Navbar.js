@@ -1,23 +1,44 @@
 import React from 'react';
-import { Link } from '@reach/router';
+import NavLink from './NavLink';
+import { isLoggedIn, getUserName } from './functions';
 
 export class Navbar extends React.Component {
+
+	handleLogout = () => {
+		localStorage.removeItem('token');
+		window.location.href = "/";
+	}
+
 	render() {
+		const userName = ( getUserName() ) ? getUserName() : '';
+
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-			  <a className="navbar-brand" href="/#">Navbar</a>
-			  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-			    <span className="navbar-toggler-icon"></span>
-			  </button>
 
 			  <div className="collapse navbar-collapse" id="navbarColor02">
-			    <ul className="navbar-nav mr-auto">
-			      <li className="nav-item active">
-			        <Link className="nav-link" to="/">Home</Link>
-			      </li>
-			      <li className="nav-item active">
-			        <Link className="nav-link" to="/login">Login</Link>
-			      </li>
+			    <ul className="navbar-nav" style={{width: '100%'}}>
+						<li className="nav-item mr-auto">
+							<strong>
+								<NavLink to="/">React with WP</NavLink>
+							</strong>
+						</li>
+						<li className="nav-item">
+							<NavLink to="/">Home</NavLink>
+						</li>
+						{ isLoggedIn() ? (
+							<React.Fragment>
+								<li className="nav-item">
+									<NavLink to={ `/dashboard/${ userName }` }>Dashboard</NavLink>
+								</li>
+								<li className="nav-item">
+									<button onClick={ this.handleLogout } className="btn btn-secondary ml-3">Logout</button>
+								</li>
+							</React.Fragment>
+						) : (
+							<li className="nav-item">
+								<NavLink to="/login">Login</NavLink>
+							</li>
+						) }
 			    </ul>
 			  </div>
 			</nav>
