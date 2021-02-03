@@ -15,7 +15,7 @@ export class Navbar extends React.Component {
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 
-			  <div className="collapse navbar-collapse" id="navbarColor02">
+			  <div className="navbar-collapse" id="navbarColor02">
 			    <ul className="navbar-nav" style={{width: '100%'}}>
 						<li className="nav-item mr-auto">
 							<strong>
