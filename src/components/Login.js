@@ -32,7 +32,7 @@ export class Login extends React.Component {
     this.setState( {loading: true}, () => {
       axios.post( `${siteUrl}/wp-json/jwt-auth/v1/token`, loginData )
         .then( res => {
-          console.warn( res.data );
+
           if ( res.data.token === undefined ) {
             this.setState( { error: res.data.message, loading: false } );
             return;
@@ -51,8 +51,7 @@ export class Login extends React.Component {
           } );
         })
         .catch( err => {
-          console.log(err);
-          // this.setState( { error: err.responce.data, loading: false } )
+          this.setState( { error: err.response.data, loading: false } )
         } )
     } )
   };

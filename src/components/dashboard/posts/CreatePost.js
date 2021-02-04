@@ -19,6 +19,10 @@ class CreatePost extends React.Component {
     }
   }
 
+  createMarkup = ( data ) => ({
+    __html: data
+  });
+
   handleFormSubmit = ( event ) => {
     event.preventDefault();
 
@@ -41,16 +45,19 @@ class CreatePost extends React.Component {
       }
     } )
       .then( res => {
-        console.log(res);
         this.setState( {
           loading: false,
           postCreated: !! res.data.id,
           message: res.data.id ? 'New post created' : ''
         } )
       } )
-      .catch( err => {{
-        this.setState( { loading: false, message: err.response.data.message } )
-      }} )
+      .catch( err => {
+        this.setState( { 
+          loading: false, 
+          postCreated: false,
+          message: err.response.data.message
+        } )
+      } )
   }
 
   handleInputChange = ( event ) => {
@@ -60,14 +67,13 @@ class CreatePost extends React.Component {
   render() {
 
     const { loading, message, postCreated } = this.state;
-    console.warn( 'state', this.state );
 
     return (
       <DashboardLayout>
         <form onSubmit={ this.handleFormSubmit } className="mt-0" style={{ maxWidth: '800px' }}>
           <legend className="mb-4">Create Post</legend>
 
-          { message ? <div className={ `alert ${ postCreated ? 'alert-success' : 'alert-danger' }` }>{message}</div> : '' }
+          { message ? <div className={ `alert ${ postCreated ? 'alert-success' : 'alert-danger' }` } dangerouslySetInnerHTML={ this.createMarkup( message ) } /> : '' }
 
           {/* Title */}
           <div className="form-group">
