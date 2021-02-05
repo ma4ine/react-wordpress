@@ -1,12 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from "@reach/router";
 
-export class NavLink extends Component {
-  
-  render() {
-    return (
-      <a className="sidebar-link nav-link" href={ this.props.to }>{ this.props.children }</a>
-    )
-  }
-}
+/**
+ * Reach Routers gives us access to a function called getProps.
+ * Whatever is returned by getProps(), in this case style,
+ * will be applied to the Link attribute as props.
+ * So here {...props} will be replaced by style: {}
+ *
+ * @param props
+ * @return {*}
+ * @constructor
+ */
+const NavLink = props => (
+	<Link
+		{...props}
+		// getProps={({ isCurrent }) => ( { style: { color: isCurrent ? '#fff' : '#fffc' } } )}
+		className="sidebar-link nav-link"
+	/>
+);
 
-export default NavLink
+export default NavLink;

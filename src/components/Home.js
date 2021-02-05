@@ -26,8 +26,8 @@ export class Home extends React.Component {
 				.then( res => {
 					this.setState( { loading: false, posts: res.data });
 				})
-				.catch( error => {
-					this.setState({ loading: false, error: error.responce.data.message }) 
+				.catch( err => {
+					this.setState({ loading: false, error: err.response.data.error }) 
 				} );
 		});
 	}

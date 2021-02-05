@@ -1,6 +1,7 @@
 import React from 'react';
 import NavLink from './NavLink';
-import { isLoggedIn, getUserName } from './functions';
+// import { isLoggedIn, getUserName } from './functions';
+import { isLoggedIn } from './functions';
 
 export class Navbar extends React.Component {
 
@@ -10,7 +11,7 @@ export class Navbar extends React.Component {
 	}
 
 	render() {
-		const userName = ( getUserName() ) ? getUserName() : '';
+		// const userName = ( getUserName() ) ? getUserName() : '';
 
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,7 +29,7 @@ export class Navbar extends React.Component {
 						{ isLoggedIn() ? (
 							<React.Fragment>
 								<li className="nav-item">
-									<NavLink to={ `/dashboard/${ userName }` }>Dashboard</NavLink>
+									<NavLink to={ `/dashboard` }>Dashboard</NavLink>
 								</li>
 								<li className="nav-item">
 									<button onClick={ this.handleLogout } className="btn btn-secondary ml-3">Logout</button>

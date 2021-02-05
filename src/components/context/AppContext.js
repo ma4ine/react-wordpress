@@ -1,6 +1,6 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 
-const AppContext = React.createContext( [
+const AppContext = createContext( [
   {},
   () => {}
 ] );

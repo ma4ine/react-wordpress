@@ -27,8 +27,16 @@
   background:gainsboro;
 }
 
+.sidebar ul ul {
+  padding-left: 15px;
+}
+
 .sidebar-link {
   color: #000;
+}
+
+.sidebar li.active {
+  background: rgb(197, 197, 197);
 }
 
 .sidebar-link:visited {

@@ -1,5 +1,5 @@
-import AppContext from "./AppContext";
 import React, { useState, useEffect } from 'react';
+import AppContext from "./AppContext";
 
 const AppProvider = ( props ) => {
 
@@ -15,7 +15,9 @@ const AppProvider = ( props ) => {
     const userName = localStorage.getItem( 'userName' );
 
     setStore( { ...store, token, userName } );
+    console.warn( 'store', store );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [] );
 
   return (

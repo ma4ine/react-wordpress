@@ -68,7 +68,7 @@ export class Login extends React.Component {
 
     if ( loggedIn || localStorage.getItem( 'token' ) ) {
 
-      return <Redirect to={`/dashboard/${user}`} noThrow />
+      return <Redirect to={`/dashboard`} noThrow />
 
     } else {
 
