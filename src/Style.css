@@ -25,6 +25,12 @@
   height: 100vh;
   padding-top: 15px;
   background:gainsboro;
+  margin-left: -150px;
+  transition: margin-left .2s ease-in-out;
+}
+
+.sidebar.active {
+  margin-left: 0;
 }
 
 .sidebar ul ul {
@@ -44,11 +50,14 @@
 }
 
 .content {
-  /* margin-left: 150px; */
   width: 100%;
 }
 
 .main-content {
-  margin-left: 150px;
   padding: 20px;
+  transition: margin-left .2s ease-in-out;
+}
+
+.content.active .main-content {
+  margin-left: 150px;
 }

@@ -1,110 +1,124 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 import { Redirect } from '@reach/router';
+import AppContext from './context/AppContext';
+import Loader from "../loader.gif";
 
-export class Login extends React.Component {
+const Login = () => {
 
-  constructor( props ) {
-    super( props );
+  const [ store, setStore ] = useContext( AppContext );  
 
-    this.state = {
-      username: '',
-      password: '',
-      userNiceName: '',
-      userEmail: '',
-      loggedIn: false,
-      loading: false,
-      error: ''
-    };
-  }
+  const [ loginFields, setLoginFields ] = useState({
+    username: '',
+    password: '',
+    userNiceName: '',
+    userEmail: '',
+    loading: false,
+    error: ''
+  });
 
-  onFormSubmit = (event) => {
+  const createMarkup = ( data ) => ({
+		__html: data
+	});
+
+  const onFormSubmit = (event) => {
     event.preventDefault();
 
     const siteUrl = 'http://localhost:3000';
 
     const loginData = {
-      username: this.state.username,
-      password: this.state.password
+      username: loginFields.username,
+      password: loginFields.password
     };
 
-    this.setState( {loading: true}, () => {
-      axios.post( `${siteUrl}/wp-json/jwt-auth/v1/token`, loginData )
-        .then( res => {
+    setLoginFields( { ...loginFields, loading: true } );
 
-          if ( res.data.token === undefined ) {
-            this.setState( { error: res.data.message, loading: false } );
-            return;
-          }
+    axios.post( `${siteUrl}/wp-json/jwt-auth/v1/token`, loginData )
+      .then( res => {
 
-          localStorage.setItem( 'token', res.data.token );
-          localStorage.setItem( 'userName', res.data.user_nicename );
-          localStorage.setItem( 'userEmail', res.data.user_email );
-
-          this.setState( { 
-            loading: false,
-            token: res.data.token,
-            userNiceName: res.data.user_nicename,
-            userEmail: res.data.user_email,
-            loggedIn: true
+        if ( res.data.token === undefined ) {
+          setLoginFields( { 
+            ...loginFields, 
+            error: res.data.message, 
+            loading: false 
           } );
-        })
-        .catch( err => {
-          this.setState( { error: err.response.data, loading: false } )
-        } )
-    } )
+          return;
+        }
+
+        const { token, user_nicename, user_email } = res.data;
+        
+        localStorage.setItem( 'token', token );
+        localStorage.setItem( 'userName', user_nicename );
+
+        setStore({
+          ...store,
+          userName: user_nicename,
+          token: token
+        });
+
+        setLoginFields( { 
+          ...loginFields,
+          loading: false,
+          token: token,
+          userNiceName: user_nicename,
+          userEmail: user_email
+        } );
+      })
+      .catch( err => {
+        setLoginFields( { ...loginFields, error: err.response.data.message, loading: false } )
+      } )
   };
 
-  handleOnChange = (event) => {
-      this.setState( { [event.target.name]: event.target.value } );
+  const handleOnChange = (event) => {
+      setLoginFields( { ...loginFields, [event.target.name]: event.target.value } );
   };
 
-  render() {
+  
+  const { username, password, error, loading } = loginFields;
 
-    const { username, password, loggedIn, userNiceName } = this.state;
+  if ( store.token ) {
 
-    const user = userNiceName ? userNiceName : localStorage.getItem( 'userName' );
+    return <Redirect to={`/dashboard`} noThrow />
 
-    if ( loggedIn || localStorage.getItem( 'token' ) ) {
+  } else {
 
-      return <Redirect to={`/dashboard`} noThrow />
-
-    } else {
-
-      return (
-        <div>
-          <Navbar />
-          <form onSubmit={ this.onFormSubmit } style={{ marginTop: '20px', marginLeft: '20px' }}>
-            <label htmlFor="#" className="form-group">
-              Username:
-              <input 
-                type="text" 
-                className="form-control" 
-                name="username" 
-                value={ username } 
-                onChange={ this.handleOnChange }
-              />
-            </label>
-            <br/>
-            <label htmlFor="#" className="form-group">
-              Passsword:
-              <input 
-                type="password" 
-                className="form-control" 
-                name="password" 
-                value={ password } 
-                onChange={ this.handleOnChange }
-              />
-            </label>
-            <br/>
-            <button className="btn btn-primary mb3" type="submit">Login</button>
-          </form>
-        </div>
-      );
-
-    }
+    return (
+      <React.Fragment>
+				<Navbar/>
+				<div style={{ height: '100vh', maxWidth: '400px', marginLeft: '25px' }}>
+					<h4 className="mb-4 mt-4">Login</h4>
+					{ error && <div className="alert alert-danger" dangerouslySetInnerHTML={ createMarkup( error ) }/> }
+					<form onSubmit={ onFormSubmit }>
+						<label className="form-group">
+							Username:
+							<input
+								type="text"
+								className="form-control"
+								name="username"
+								value={ username }
+								onChange={ handleOnChange }
+							/>
+						</label>
+						<br/>
+						<label className="form-group">
+							Password:
+							<input
+								type="password"
+								className="form-control"
+								name="password"
+								value={ password }
+								onChange={ handleOnChange }
+							/>
+						</label>
+						<br/>
+						<button className="btn btn-primary mb-3" type="submit">Login</button>
+						{ loading && <img className="loader" src={Loader} alt="Loader"/> }
+					</form>
+				</div>
+			</React.Fragment>
+    );
   }
-}
+};
 
 export default Login

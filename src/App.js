@@ -8,6 +8,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreatePost from './components/dashboard/posts/CreatePost';
 import AppProvider from './components/context/AppProvider';
 import Posts from './components/dashboard/posts/Posts';
+import Pages from './components/dashboard/pages/Pages';
 
 export class App extends React.Component {
 
@@ -20,8 +21,8 @@ export class App extends React.Component {
           <Dashboard path="/dashboard" />
           <Posts path="/dashboard/posts" />
           <CreatePost path="/dashboard/create-post" />
-          <Posts path="/dashboard/pages" />
           <SinglePost path="/post/:id" />
+          <Pages path="/dashboard/pages" />
         </Router>
       </AppProvider>
     )
