@@ -15,7 +15,7 @@ const ToggleSidebarBtn = () => {
       }) } 
       className={ `btn btn-secondary ml-2 ${ store.sidebarActive ? 'active' : '' }` }
     >
-      <span class="navbar-toggler-icon"></span>
+      <span className="navbar-toggler-icon"></span>
     </button>
   )
 }

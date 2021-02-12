@@ -25,7 +25,7 @@ const Login = () => {
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    const siteUrl = 'http://localhost:3000';
+    const siteUrl = 'https://wpreact2.localhost/';
 
     const loginData = {
       username: loginFields.username,
@@ -67,7 +67,7 @@ const Login = () => {
       })
       .catch( err => {
         setLoginFields( { ...loginFields, error: err.response.data.message, loading: false } )
-      } )
+      } );
   };
 
   const handleOnChange = (event) => {

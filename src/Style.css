@@ -1,3 +1,11 @@
+a {
+  transition: color .2s ease-in-out;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .post-content img {
   width: 100%;
   height: auto;
@@ -60,4 +68,48 @@
 
 .content.active .main-content {
   margin-left: 150px;
+}
+
+.post-wrapper {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.post-title {
+  display: block;
+  font-size: 32px;
+  margin-bottom: .5em;
+  color: #000;
+}
+
+.post-attachment-thumbnail {
+  width: 100%;
+  height: auto;
+}
+
+.post-excerpt {
+  font-size: 20px;
+  margin: 1em 0 1em;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+}
+
+.post-category,
+.post-author,
+.post-date {
+  display: flex;
+  align-items: bottom;
+  font-weight: bold;
+  line-height: 1em;
+  margin-right: 2em;
+}
+
+.post-category i,
+.post-author i,
+.post-date i {
+  margin-right: .5em;
 }

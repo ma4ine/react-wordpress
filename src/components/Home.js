@@ -42,7 +42,7 @@ export class Home extends React.Component {
 				<Navbar/>
 				{ error && <div className="alert alert-danger">{ error }</div> }
 				{ posts.length ? (
-					<div className="mt-5 post-container">
+					<div className="mt-4 ml-4 post-container">
 						{ posts.map( post => (
 							<div key={ post.id } className="card border-dark mb-3" style={{ width: '50rem'}}>
 								{/* Title */}
