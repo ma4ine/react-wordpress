@@ -113,3 +113,41 @@ a:hover {
 .post-date i {
   margin-right: .5em;
 }
+
+.pagination {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prev,
+.next,
+.page-no {
+  display: inline-block;
+  padding: 5px 10px;
+  background: rgb(223, 223, 223);
+  margin: 0 5px;
+}
+
+.prev:hover,
+.next:hover,
+.page-no:hover {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #0056B3;
+  color: #fff;
+  margin: 0 5px;
+  transition: .2s ease-in-out;
+}
+
+.page-dots {
+  display: inline-block;
+  padding: 5px;
+  /* margin: 0 5px; */
+}
+
+
+

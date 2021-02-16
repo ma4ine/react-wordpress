@@ -38,8 +38,6 @@ const Posts = ( props ) => {
       } )
   }, [ currentPage ] );
 
-	console.warn( loading, posts, totalPages );
-
   const getPosts = ( posts ) => {
 		return posts.map( post => <Post key={ post.id } post={ post } /> )
 	}

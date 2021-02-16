@@ -2,7 +2,7 @@ import React from 'react'
 
 const FeaturedImage = ( props ) => {
 
-  const { img_sizes, img_src, img_srcset } = props.image;
+  const { img_src, img_srcset } = props.image;
   const { title } = props;
 
   return (

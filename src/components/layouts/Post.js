@@ -21,7 +21,7 @@ const Post = ( props  ) => {
       <div className="post-meta">
         {/* Author */}
         <Link to={ `/author/${ post.meta.author_id }` } className="post-author">
-          <i class="bi bi-person-fill"/>
+          <i className="bi bi-person-fill"/>
           <span>{ post.meta.author_name }</span>
         </Link>
 
